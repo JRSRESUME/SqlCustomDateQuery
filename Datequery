@@ -1,0 +1,30 @@
+DECLARE @Todaydate AS Date = GETDATE()
+DECLARE @LastMonth AS VARCHAR(2) = DATEPART(month, @Todaydate) - 1
+DECLARE @NumOfDays AS VARCHAR(2)
+DECLARE @CurrentYear AS VARCHAR(4) = DATEPART(year, @Todaydate)
+DECLARE @StartDate AS VARCHAR(20)
+DECLARE @EndDate AS VARCHAR(20)
+
+
+IF @LastMonth IN ( '4', '6', '9', '11')
+   SET @NumOfDays = '30';
+ELSE
+BEGIN
+IF @LastMonth IN ( '1', '3', '5', '7', '8', '10', '12')
+SET @NumOfDays = '31';
+
+ELSE
+SET @NumOfDays = '28';
+END;
+
+
+SET @StartDate = @LastMonth + '-01-' + @CurrentYear
+SET @EndDate = @LastMonth + '-' + @NumOfDays + '-' + @CurrentYear
+
+
+
+SELECT [Whatever]
+
+FROM [Table/View]
+
+WHERE ModifiedDate BETWEEN @StartDate AND @EndDate;
